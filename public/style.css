@@ -1,0 +1,140 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f9;
+}
+
+h1 {
+  color: white;
+  padding: 20px;
+  margin: 0;
+}
+
+.btn-watchlist button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.btn-watchlist button:hover {
+  background-color: #0056b3;
+}
+
+.welcome {
+  background-color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#addStockForm {
+  margin: 20px auto;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  max-width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#addStockForm select,
+#addStockForm button {
+  padding: 10px;
+  margin: 5px 0;
+  width: 90%;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+#addStockForm button {
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+  border: none;
+}
+
+#addStockForm button:hover {
+  background-color: #45a049;
+}
+
+#stocksDashboard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin: 20px;
+}
+
+.stock {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 250px;
+  text-align: center;
+  transition: transform 0.2s ease-in-out;
+}
+
+.stock:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.stock h3 {
+  font-size: 22px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.stock p {
+  font-size: 16px;
+  color: #555;
+  margin: 5px 0;
+}
+
+.stock p span {
+  font-weight: bold;
+  color: #333;
+}
+
+.stock p.price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #27ae60;
+  margin: 10px 0;
+}
+
+.stock p.high {
+  color: #e67e22;
+  padding: 5px 0;
+  font-weight: bold;
+}
+
+.stock p.low {
+  color: #c0392b;
+  font-weight: bold;
+}
+
+.stock button {
+  padding: 8px 16px;
+  font-size: 14px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.stock button:hover {
+  background-color: #e53935;
+}

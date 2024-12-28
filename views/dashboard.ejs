@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Dashboard</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <div class="welcome">
+        <h1>Stock Market Dashboard For <%= username %>
+        </h1>
+        <a href="/watchlist" class="btn-watchlist">
+            <button>Go to Watchlist</button>
+        </a>
+    </div>
+
+    <!-- Form to Add Stock -->
+    <form id="addStockForm">
+        <label for="stockSymbol">Add Stock Symbol:</label>
+        <select id="stockSymbol" required>
+            <% symbols.forEach(symbol=> { %>
+                <option value="<%= symbol.symbol %>">
+                    <%= symbol.symbol %> - <%= symbol.description %>
+                </option>
+                <% }); %>
+        </select>
+        <button type="submit">Add</button>
+    </form>
+
+    <!-- Stock Dashboard -->
+    <div id="stocksDashboard"></div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const addStockForm = document.getElementById('addStockForm');
+        const stocksDashboard = document.getElementById('stocksDashboard');
+
+        // Add stock event
+        addStockForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const symbol = document.getElementById('stockSymbol').value.toUpperCase();
+            if (symbol) {
+                socket.emit('addStock', symbol); // Add stock on the server
+                document.getElementById('stockSymbol').value = ''; // Clear input field
+            }
+        });
+
+        // Remove stock
+        const removeStock = (symbol) => {
+            socket.emit('removeStock', symbol); // Remove stock on the server
+        };
+
+        // const addStockToWatchlist = (symbol) => {
+        //     socket.emit('addStock', symbol);
+        //     console.log(`Added ${symbol} to the watchlist.`);
+        // };
+
+        // // Remove stock event (emit to server to remove stock from the user's watchlist)
+        // const removeStockToWatchlist = (symbol) => {
+        //     socket.emit('removeStock', symbol);
+        //     console.log(`Removed ${symbol} from the watchlist.`);
+        // };
+
+        // Update stocks in the dashboard
+        socket.on('stockUpdates', (stocks) => {
+            stocksDashboard.innerHTML = ''; // Clear the dashboard
+
+            stocks.forEach((stock) => {
+                const stockDiv = document.createElement('div');
+                stockDiv.className = 'stock';
+                stockDiv.innerHTML = `
+          <h3>${stock.symbol}</h3>
+          <p class="price">Price: $${stock.c}</p>
+          <p class="high">High: $${stock.h}</p>
+          <p class="low">Low: $${stock.l}</p>
+          <button onclick="removeStock('${stock.symbol}')">Remove</button>
+           <button onclick="removeStockToWatchlist('${stock.symbol}')">Remove from Watchlist</button>
+           <button onclick="addStockToWatchlist('${stock.symbol}')">Add to Watchlist</button>
+        `;
+                stocksDashboard.appendChild(stockDiv);
+            });
+        });
+
+        const addStockToWatchlist = async (symbol) => {
+            await fetch("/watchlist", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({ symbol }),
+            });
+        };
+
+        // Remove from watchlist
+        const removeStockToWatchlist = async (symbol) => {
+            await fetch("/watchlist", {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({ symbol }),
+            });
+        }
+    </script>
+
+</body>
+
+</html>

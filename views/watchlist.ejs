@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <div class="welcome">
+        <h1>Welcome!</h1>
+        <a href="/dashboard" class="btn-watchlist">
+            <button>Go to Dashboard</button>
+        </a>
+    </div>
+
+    <h2>Your Watchlist</h2>
+
+    <div id="stocksDashboard">
+        <% watchlist.forEach(stock=> { %>
+            <div class="stock">
+                <h3>
+                    <%= stock.symbol %>
+                </h3>
+                <p class="price">Price: $<%= stock.c %>
+                </p>
+                <p class="high">High: $<%= stock.h %>
+                </p>
+                <p class="low">Low: $<%= stock.l %>
+                </p>
+                <button onclick="removeStockToWatchlist('<%= stock.symbol %>')">Remove from Watchlist</button>
+            </div>
+            <% }); %>
+    </div>
+
+    <script>
+        // Example JavaScript function for removing a stock
+        function removeStockToWatchlist(symbol) {
+            console.log('Removing stock:', symbol);
+            // Add logic to handle the removal request (e.g., API call)
+        }
+    </script>
+</body>
+
+</html>
